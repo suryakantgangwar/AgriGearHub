@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    
+  header {
+    background: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+  }
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .button {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .button:hover {
+      background: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+    .user-list, .vendor-list {
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body><header><h1>AgriGear Rental Hub</h1> 
+  <nav>
+    <a href="index.html">Home</a> </nav> </header>
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+
+    <!-- Login Section -->
+    <div id="login-section">
+      <h2>Login</h2>
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" placeholder="Enter Username"><br><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" placeholder="Enter Password"><br><br>
+      <button class="button" onclick="login()">Login</button>
+    </div>
+
+    <!-- Admin Controls -->
+    <div id="admin-controls" class="hidden">
+      <h2>Admin Actions</h2>
+      <button class="button" onclick="showVendors()">Approve Vendors</button>
+      <button class="button" onclick="showUsers()">View User Details</button>
+      <button class="button" onclick="logout()">Logout</button>
+
+      <!-- Vendor Approval Section -->
+      <div id="vendor-section" class="hidden">
+        <h3>Vendors Pending Approval</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="vendor-list">
+            <tr>
+              <td>Vendor 1</td>
+              <td>
+                <button class="button" onclick="approveVendor(this)">Approve</button>
+                <button class="button" style="background: #f44336;" onclick="rejectVendor(this)">Reject</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Vendor 2</td>
+              <td>
+                <button class="button" onclick="approveVendor(this)">Approve</button>
+                <button class="button" style="background: #f44336;" onclick="rejectVendor(this)">Reject</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- User Details Section -->
+      <div id="user-section" class="hidden">
+        <h3>User Details</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>User1</td>
+              <td>user1@example.com</td>
+            </tr>
+            <tr>
+              <td>User2</td>
+              <td>user2@example.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (username === "admin" && password === "admin123") {
+        alert("Login Successful");
+        document.getElementById("login-section").classList.add("hidden");
+        document.getElementById("admin-controls").classList.remove("hidden");
+      } else {
+        alert("Invalid Credentials");
+      }
+    }
+
+    function showVendors() {
+      document.getElementById("vendor-section").classList.remove("hidden");
+      document.getElementById("user-section").classList.add("hidden");
+    }
+
+    function showUsers() {
+      document.getElementById("user-section").classList.remove("hidden");
+      document.getElementById("vendor-section").classList.add("hidden");
+    }
+
+    function approveVendor(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+      alert("Vendor Approved");
+    }
+
+    function rejectVendor(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+      alert("Vendor Rejected");
+    }
+
+    function logout() {
+      alert("Logging out...");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
