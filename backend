@@ -1,0 +1,53 @@
+# Django setup (in your Django project)
+
+# models.py
+from django.db import models
+
+class Equipment(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='equipment_images/')  # Store images
+    specifications = models.JSONField() # Store specifications as JSON
+
+    def __str__(self):
+        return self.name
+
+# views.py
+from django.shortcuts import render
+from .models import Equipment
+
+def index(request):
+    equipments = Equipment.objects.all()  # Fetch all equipment
+    return render(request, 'index.html', {'equipments': equipments})
+
+def contactus(request):
+    return render(request, 'contactus.html') # Create a contactus.html template
+
+def login(request):
+    return render(request, 'login.html') # Create a login.html template
+
+def admin(request):
+    return render(request, 'admin.html') # Create a admin.html template
+
+def register(request):
+    return render(request, 'register.html') # Create a register.html template
+
+def book(request, equipment_id):
+    equipment = Equipment.objects.get(pk=equipment_id)
+    return render(request, 'book.html', {'equipment': equipment}) # Create book.html
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('contactus/', views.contactus, name='contactus'),
+    path('login/', views.login, name='login'),
+    path('admin/', views.admin, name='admin'),
+    path('register/', views.register, name='register'),
+    path('book/<int:equipment_id>/', views.book, name='book'), # URL for booking
+]
+
+# settings.py (Important for image uploads)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
